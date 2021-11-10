@@ -3,7 +3,7 @@ import React from 'react';
 const Banner = () => {
     return (
         <div>
-            <h2>This is Banner Section</h2>
+            <h2>This is Banner Section Ali</h2>
         </div>
     );
 };
