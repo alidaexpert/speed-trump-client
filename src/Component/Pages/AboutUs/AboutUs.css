@@ -1,0 +1,10 @@
+.sizes{
+    position: absolute;
+    top: 16rem;
+    left: -1rem;
+}
+@media only screen and (max-width:688px) {
+    .sizes{
+        display: none;
+    }
+}
