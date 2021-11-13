@@ -8,7 +8,7 @@ const AddAnProduct = () => {
     const [car,setCar]=useState({})
     const {equipment,features}=car
     useEffect(()=>{
-        const url=`http://localhost:5000/cars/618eb0af1eae242def7f863c`
+        const url=`https://speed-trump-bd.herokuapp.com/cars/618eb0af1eae242def7f863c`
 fetch(url)
 .then(res=>res.json())
 .then(data=>setCar(data))
@@ -20,7 +20,7 @@ fetch(url)
          data.features=features
          const addCar=data
 
-         fetch("http://localhost:5000/cars",{
+         fetch("https://speed-trump-bd.herokuapp.com/cars",{
 method:"POST",
 headers:{
     "content-type":"application/json"

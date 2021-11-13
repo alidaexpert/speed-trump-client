@@ -21,7 +21,7 @@ SwiperCore.use([Autoplay,Pagination]);
 const Banner = () => {
     const [banners,setBanners]=useState([])
     useEffect(()=>{
-        fetch('http://localhost:5000/banner')
+        fetch('https://speed-trump-bd.herokuapp.com/banner')
         .then(res=>res.json())
         .then(data=>setBanners(data))
     },[])

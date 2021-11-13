@@ -7,14 +7,14 @@ const MakeAdmin = () => {
 //   const [singleUserData,setSingleUserData]=useState({})
  const roleChangeRef=useRef()
   useEffect(()=>{
-fetch('http://localhost:5000/user_data')
+fetch('https://speed-trump-bd.herokuapp.com/user_data')
 .then(res=>res.json())
 .then(data=>setUserData(data))
   },[userData])
   const handleEdit=(id)=>{
         const roleChange=roleChangeRef.current.value
         const role={role:roleChange}
-    fetch(`http://localhost:5000/user_admin/${id}`,{
+    fetch(`https://speed-trump-bd.herokuapp.com/user_admin/${id}`,{
         method:"PUT",
         headers:{
             "content-type":"application/json"

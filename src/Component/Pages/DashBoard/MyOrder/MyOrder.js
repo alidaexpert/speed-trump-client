@@ -4,7 +4,7 @@ const MyOrder = () => {
     const {user,logOut}=useAuth()
     const [orders,setOrders]=useState([])
     useEffect(()=>{
-        fetch(`http://localhost:5000/myorder/${user.email}`,{
+        fetch(`https://speed-trump-bd.herokuapp.com/myorder/${user.email}`,{
             headers:{
                 "authorization":`Bearer ${localStorage.getItem("idToken")}`
             }

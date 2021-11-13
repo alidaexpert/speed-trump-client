@@ -44,7 +44,7 @@ return ()=> unsubscribe
     },[user])
 
     useEffect(()=>{
-        fetch(`http://localhost:5000/user/${user.email}`)
+        fetch(`https://speed-trump-bd.herokuapp.com/user/${user.email}`)
         .then(res=>res.json())
         .then(data=>setAdmin(data.Admin))
     },[user.email])
@@ -62,7 +62,7 @@ return ()=> unsubscribe
  }
  const saveUserToDB=(email,name,pic,method)=>{
     const user={email,name,pic}
-    fetch('http://localhost:5000/user_data',{
+    fetch('https://speed-trump-bd.herokuapp.com/user_data',{
         method:method,
         headers:{
             'content-type':'application/json'

@@ -10,7 +10,7 @@ const ManageAllOrders = () => {
     const [orders,setOrders]=useState([])
     // const [status,setStatus]=useState('Pending')
     useEffect(()=>{
-        fetch("http://localhost:5000/purchase")
+        fetch("https://speed-trump-bd.herokuapp.com/purchase")
         .then(res=>res.json())
         .then(data=>{
           
@@ -20,7 +20,7 @@ const ManageAllOrders = () => {
     },[orders])
   
     const clickDelete=id=>{
-        fetch(`http://localhost:5000/purchase/${id}`,{
+        fetch(`https://speed-trump-bd.herokuapp.com/purchase/${id}`,{
             method:"DELETE",
         })
        .then(response=>response.json())
@@ -36,7 +36,7 @@ const ManageAllOrders = () => {
 
 const clickApproved=(id)=>{
     const updateStatus={status:"Approved"}
-    fetch(`http://localhost:5000/purchase/${id}`,{
+    fetch(`https://speed-trump-bd.herokuapp.com/purchase/${id}`,{
         method:"PUT",
         headers:{
             "content-type":"application/json"

@@ -6,7 +6,7 @@ const useCars = () => {
     const [pagination,setPagination]=useState(0);
     const size=6
 useEffect(()=>{
-    fetch(`http://localhost:5000/cars?page=${page}&size=${size}`)
+    fetch(`https://speed-trump-bd.herokuapp.com/cars?page=${page}&size=${size}`)
     .then(res=>res.json())
     .then(data=>{
         setCars(data.products)

@@ -23,7 +23,7 @@ const SingleCarExplore = () => {
     const paymentViaRef=useRef()
     const paymentNumRef=useRef()
     useEffect(()=>{
-        const url=`http://localhost:5000/cars/${id}`
+        const url=`https://speed-trump-bd.herokuapp.com/cars/${id}`
 fetch(url)
 .then(res=>res.json())
 .then(data=>setCar(data))
@@ -40,7 +40,7 @@ const paymentNum=paymentNumRef.current.value
         const book={
 userName,email,phone,date,carName,pic,paymentVia,paymentNum,status:"Pending"
         }
-        fetch(`http://localhost:5000/purchase`,{
+        fetch(`https://speed-trump-bd.herokuapp.com/purchase`,{
             method:"POST",
             headers:{
                 "content-type":"application/json"
