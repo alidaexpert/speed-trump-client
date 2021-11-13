@@ -8,6 +8,7 @@ import Register from './Component/Pages/Authentication/Register/Register';
 import CarExplore from './Component/Pages/CarExplore/CarExplore';
 import ContactUs from './Component/Pages/ContactUs/ContactUs';
 import DashBoard from './Component/Pages/DashBoard/DashBoard/DashBoard';
+import SingleManageProduct from './Component/Pages/DashBoard/SingleManageProduct/SingleManageProduct';
 import CarGallery from './Component/Pages/Home/CarGallery/CarGallery';
 import Home from './Component/Pages/Home/Home/Home';
 import NotFound from './Component/Pages/NotFound/NotFound';
@@ -56,6 +57,9 @@ function App() {
      </Route>
      <PrivateRoute path='/purchase_done'>
  <PurchaseComplete></PurchaseComplete>
+     </PrivateRoute>
+     <PrivateRoute path='/manage_product/:id'>
+ <SingleManageProduct></SingleManageProduct>
      </PrivateRoute>
      <PrivateRoute path='/new_user'>
  <NewUser></NewUser>

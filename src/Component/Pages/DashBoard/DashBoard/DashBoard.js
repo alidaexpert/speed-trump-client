@@ -11,6 +11,7 @@ import Review from '../Review/Review';
 import Pay from '../Pay/Pay';
 import MyOrder from '../MyOrder/MyOrder';
 import AdminRoute from '../../../hooks/AdminRoute/AdminRoute';
+import ManageProduct from '../ManageProduct/ManageProduct';
 const DashBoard = () => {
     const {url,path}=useRouteMatch()
     const {admin,logOut}=useAuth()
@@ -53,6 +54,9 @@ const DashBoard = () => {
 <Link to={`${url}/manage_all_order`} className="hover:bg-pink-700 p-2 block">
     <button>Manage All Orders</button>
 </Link>
+<Link to={`${url}/manage_product`} className="hover:bg-pink-700 p-2 block">
+    <button>Manage Product</button>
+</Link>
 <Link to={`${url}/add_an_product`} className="hover:bg-pink-700 p-2 block">
     <button>Add Services</button>
 </Link>
@@ -80,6 +84,9 @@ const DashBoard = () => {
      </Route>
      <AdminRoute path={`${path}/manage_all_order`}>
         <ManageAllOrders></ManageAllOrders>
+     </AdminRoute>
+     <AdminRoute path={`${path}/manage_product`}>
+        <ManageProduct></ManageProduct>
      </AdminRoute>
      <AdminRoute path={`${path}/add_an_product`}>
         <AddAnProduct></AddAnProduct>
