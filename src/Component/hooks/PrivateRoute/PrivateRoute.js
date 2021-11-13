@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router';
-import useAuth from '../../../hooks/useAuth/useAuth';
+import useAuth from '../../hooks/useAuth/useAuth';
 import Loader from "react-loader-spinner";
 
 const PrivateRoute = ({children,...rest}) => {

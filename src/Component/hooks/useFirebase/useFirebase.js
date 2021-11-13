@@ -1,22 +1,24 @@
 import { useEffect, useState } from 'react';
-import {getAuth,signInWithEmailAndPassword,signInWithPopup,signOut,GoogleAuthProvider,createUserWithEmailAndPassword,onAuthStateChanged,sendPasswordResetEmail,getIdToken } from "firebase/auth"
+import {getAuth,signInWithEmailAndPassword,signInWithPopup,signOut,GoogleAuthProvider,createUserWithEmailAndPassword,onAuthStateChanged,sendPasswordResetEmail,getIdToken,updateProfile  } from "firebase/auth"
 import iniatializeAppAuth from '../../Firebase/firebase.init';
 iniatializeAppAuth()
 const auth=getAuth()
 const googleProvider=new GoogleAuthProvider()
 const useFirebase = () => {
     const [user,setUser]=useState({})
+    const [admin,setAdmin]=useState(false)
     const [error,setError]=useState('')
-    const [email,setEmail]=useState('')
-    const [password,setPassword]=useState('')
 const [isLoading,setIsLoading]=useState(true)
 
 // google login 
     const signInGoogle=()=>{
         setIsLoading(true)
-return signInWithPopup(auth,googleProvider)
+ return signInWithPopup(auth,googleProvider)
 .then(result=>{
-    setUser(result.user)
+    const user=result.user
+    setUser(user)
+    saveUserToDB(user.email,user.displayName,user.photoURL,'PUT')
+    setError('')
 })
 .catch(error=>{
     setError(error.message)
@@ -28,7 +30,7 @@ return signInWithPopup(auth,googleProvider)
 
 // state change save 
     useEffect(()=>{
-        onAuthStateChanged(auth,user=>{
+      const unsubscribe =  onAuthStateChanged(auth,user=>{
             if(user){
                 getIdToken(user)
                 .then(idToken=>{
@@ -38,42 +40,65 @@ return signInWithPopup(auth,googleProvider)
             }
             setIsLoading(false)
         })
+return ()=> unsubscribe
+    },[user])
 
-    },[])
+    useEffect(()=>{
+        fetch(`http://localhost:5000/user/${user.email}`)
+        .then(res=>res.json())
+        .then(data=>setAdmin(data.Admin))
+    },[user.email])
 
-    // input set 
-    const inputEmail=e=>{
-        setEmail(e.target.value)
-    }
-    const inputPassword=e=>{
-        setPassword(e.target.value)
-    }
- const restPassword=()=>{
-   return sendPasswordResetEmail(auth, email)
+ const restPassword=(email)=>{
+ sendPasswordResetEmail(auth, email)
   .then(() => {
     // Password reset email sent!
-    // ..
+    setError('')
   })
   .catch((error) => {
     setError(error.message);
     // ..
   });
  }
-const signUp=()=>{
+ const saveUserToDB=(email,name,pic,method)=>{
+    const user={email,name,pic}
+    fetch('http://localhost:5000/user_data',{
+        method:method,
+        headers:{
+            'content-type':'application/json'
+        },
+        body:JSON.stringify(user)
+    })
+    .then()
+}
+const signUp=(email,password,name,profile)=>{
  return createUserWithEmailAndPassword(auth,email,password)
 .then(result=>{
     setUser(result.user)
+    updateProfile(auth.currentUser, {
+        displayName: name, photoURL: profile
+      }).then((user) => {
+        // Profile updated!
+        // ...
+      }).catch((error) => {
+        // An error occurred
+        // ...
+      });
+      saveUserToDB(email,name,profile,'POST')
+    setError('')
 })
 .catch(error=>{
     setError(error.message)
+
 })
     }
     // email login 
-    const signIn=()=>{
+    const signIn=(email,password)=>{
         setIsLoading(true)
-       return signInWithEmailAndPassword(auth,email,password)
+     return  signInWithEmailAndPassword(auth,email,password)
         .then(result=>{
             setUser(result.user)
+            setError('')
         })
         .catch(error=>{
             setError(error.message)
@@ -86,6 +111,7 @@ const signUp=()=>{
 signOut(auth)
 .then(()=>{
     setUser({})
+    setError('')
 })
 .catch(error=>{
     setError(error.message)
@@ -95,10 +121,9 @@ signOut(auth)
     return {
         user,
         error,
+        admin,
         isLoading,
         signInGoogle,
-        inputPassword,
-        inputEmail,
         signUp,
         logOut,
         signIn,
