@@ -6,8 +6,7 @@
 
 
 
-### 1. Lots of car model in details
-### 2.Mobile ,tab And Desktop Responsive
-### 3.Admin Dashboard with Nesting Route
-### 4. Specific Admin user and member
-### 5. JWT Using And extra UI Design 
+### 1. Each car has details and the car booking is dynamic
+### 2. Login users can order and give a review 
+### 3. Login users can manage orders in the dashboard
+### 4. Admin user can make admin, manage all products, manage all users order
