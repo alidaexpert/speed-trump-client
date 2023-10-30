@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {  RatingView } from 'react-simple-star-rating'
+import {  Rating } from 'react-simple-star-rating'
 
 const CarExplorer = ({car}) => {
-    const {_id,name,price,pic,madeyear,mileage,fuel,horsepower}=car
+    const {_id,name,price,pic,madeyear,mileage,fuel,horsepower,rating}=car
     return (
        <Link to={'/car/'+ _id}>
             <div className="shadow-lg bg-white overflow-hidden">
@@ -14,7 +14,8 @@ const CarExplorer = ({car}) => {
             <div className="space-y-2 pt-4 uppercase">
           <div className="text-left px-4">
           <h2 className="text-2xl text-pink-600 font-bold"> {name}</h2>
-            <RatingView className=" opacity-70" activeColor="#ffffff" size={16} ratingValue={5} /* Rating Props */ />
+            <Rating className=" opacity-70  " SVGclassName={'display: inline-block'}  readonly size={30}  
+  initialValue={rating} /* Rating Props */ />
           </div>
             <div className="border-t-2 text-gray-500 grid grid-cols-4 p-4 font-bold gap-4 border-gray-500">
 <span>Build: {madeyear}</span>

@@ -17,7 +17,7 @@ const Review = () => {
         reset()
         data.rating=rating
         data.pic=user.photoURL
-          fetch("https://speed-trump-bd.herokuapp.com/reviews",{
+          fetch("https://speed-trump-server.onrender.com/reviews",{
 method:"POST",
 headers:{
     "content-type":"application/json"
@@ -42,7 +42,8 @@ body:JSON.stringify(data)
         <input className="border-2 p-2 border-blue-900 rounded-md" defaultValue={user.displayName} placeholder="Full Name" {...register("name", { required: true, maxLength: 100 })} />
         <textarea rows="5" cols="30" className="border-2 p-2 border-blue-900 rounded-md" placeholder="Description" {...register("description")} />
      
-      <Rating onClick={handleRating} size={40} ratingValue={rating} /* Rating Props */ />
+      <Rating onClick={handleRating} SVGclassName={'display: inline-block'} size={40} initialValue={rating} /* Rating Props */ />
+      
       
         <input className="bg-indigo-900 text-white py-2 rounded-md" type="submit" />
         <ToastContainer/>

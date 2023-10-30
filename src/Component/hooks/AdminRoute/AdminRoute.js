@@ -1,39 +1,30 @@
-import React from 'react';
-import { Redirect, Route } from 'react-router';
-import useAuth from '../../hooks/useAuth/useAuth';
-import Loader from "react-loader-spinner";
+import React from "react";
+import { Outlet } from "react-router-dom";
+import useAuth from "../../hooks/useAuth/useAuth";
+import { InfinitySpin } from "react-loader-spinner";
 
-const AdminRoute = ({children,...rest}) => {
-    const {user,admin,isLoading}=useAuth()
-    if(isLoading===true){
-        return (<div className="flex justify-center p-36 items-center">
-            <Loader
-    type="Puff"
-    color="#00BFFF"
-    height={100}
-    width={100}
-    timeout={3000} //3 secs
-  />
-        </div>)}
+const AdminRoute = () => {
+  const { user, admin, isLoading } = useAuth();
+  // const Location = useLocation();
+  // const navigate = useNavigate();
+
+  if (isLoading === true) {
     return (
-        <Route
-      {...rest}
-      render={({ location }) =>
-        user.email && admin ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/",
-              state: { from: location }
-              
-            }}
-          />
-        )
-      }
-    />
+      <div className="flex justify-center p-36 items-center">
+        <InfinitySpin width="200" color="#4fa94d" />
+      </div> 
     );
-};
-  
+  }
 
-export default  (AdminRoute);
+  if (user.email && admin ) return <Outlet />;
+ 
+  // else  { return <h1 className=" mt-4 pt-4 text-4xl text-red-500">Hey, You are not Admin</h1> }
+  // ) : (
+  //   navigate({
+  //     pathname: "/",
+  //     state: { form: Location },
+  //   })
+  // );
+};
+
+export default AdminRoute;

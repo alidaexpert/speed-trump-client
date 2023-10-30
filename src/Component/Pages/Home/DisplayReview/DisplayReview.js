@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from "react";
 // import ReactStars from "react-rating-stars-component";
-import {  RatingView } from 'react-simple-star-rating'
+import {  Rating } from 'react-simple-star-rating'
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide, } from "swiper/react";
 // swiper bundle styles
-import 'swiper/swiper-bundle.min.css'
+import 'swiper/css/bundle'
 // swiper core styles
-import 'swiper/swiper.min.css'
+import 'swiper/css'
 // modules styles
-import 'swiper/components/navigation/navigation.min.css'
-import 'swiper/components/pagination/pagination.min.css'
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import "../../../../styles.css";
 // import Swiper core and required modules
-import SwiperCore, {
-    Autoplay,Parallax
-} from 'swiper';
+// import SwiperCore, {
+//     Autoplay,Parallax
+// } from 'swiper';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuoteLeft, faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 // install Swiper modules
-SwiperCore.use([Autoplay,Parallax]);
+// SwiperCore.use([Autoplay,Parallax]);
+import { Navigation, Pagination, Autoplay,Parallax } from 'swiper/modules';
+
 const DisplayReview = () => {
     const quoteRight=<FontAwesomeIcon icon={faQuoteRight}></FontAwesomeIcon>
     const quoteLeft=<FontAwesomeIcon icon={faQuoteLeft}></FontAwesomeIcon>
    const [displayReviews,setDisplayReviews]=useState([])
    useEffect(()=>{
-       fetch('https://speed-trump-bd.herokuapp.com/reviews')
+       fetch('https://speed-trump-server.onrender.com/reviews')
        .then(res=>res.json())
        .then(data=>setDisplayReviews(data))
    },[])
@@ -35,7 +37,8 @@ const DisplayReview = () => {
            <h2 className="text-pink-600 text-4xl font-bold pt-8 text-center">| Our Customer says</h2>
             <p className="text-pink-500 font-bold">And give their valuable review</p>
            </div>
-   <Swiper speed={600} parallax={true} autoplay={{
+   <Swiper                     modules={[Navigation, Pagination, Autoplay,Parallax]}
+ speed={600} parallax={true} autoplay={{
     "delay": 2000,
     "disableOnInteraction": false
   }}  className="mySwiper h-96">
@@ -48,7 +51,10 @@ const DisplayReview = () => {
       <p className='p-5'>{review.description}</p>
       <div className="flex justify-center">
      
-   <RatingView  ratingValue={review.rating} /* Rating Props */ />
+   <Rating  initialValue={review.rating} SVGclassName={'display: inline-block'} /* Rating 
+   Props */ />
+
+   
       </div>
     </div>
    

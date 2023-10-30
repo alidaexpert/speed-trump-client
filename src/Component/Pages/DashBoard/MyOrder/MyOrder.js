@@ -12,7 +12,7 @@ const MyOrder = () => {
 
     const [orders,setOrders]=useState([])
     useEffect(()=>{
-        fetch(`https://speed-trump-bd.herokuapp.com/myorder/${user.email}`,{
+        fetch(`https://speed-trump-server.onrender.com/myorder/${user.email}`,{
             headers:{
                 "authorization":`Bearer ${localStorage.getItem("idToken")}`
             }
@@ -29,7 +29,7 @@ const MyOrder = () => {
     },[user.email,logOut])
 
     const clickDelete=id=>{
-        fetch(`https://speed-trump-bd.herokuapp.com/purchase/${id}`,{
+        fetch(`https://speed-trump-server.onrender.com/purchase/${id}`,{
             method:"DELETE",
         })
        .then(response=>response.json())

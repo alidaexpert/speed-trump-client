@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LockClosedIcon } from '@heroicons/react/solid'
-import { Link,useHistory} from 'react-router-dom';
+import { Link,useNavigate} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import useAuth from '../../../hooks/useAuth/useAuth';
@@ -12,7 +12,7 @@ const Register = () => {
     signUp}=useAuth()
 
 const [loginData,setLoginData]=useState({})
-    const history=useHistory()
+    const history=useNavigate()
     const redirect_url= "/new_user"
 
 const handleOnChange=e=>{
@@ -30,7 +30,7 @@ if(loginData.password!==loginData.password2){
 }
 signUp(loginData.email,loginData.password,loginData.name,loginData.profile)
 .then(()=>{
-          history.replace(redirect_url)  })
+          history(redirect_url,{replace:true})  })
   e.preventDefault()
 }
 
@@ -39,7 +39,7 @@ signUp(loginData.email,loginData.password,loginData.name,loginData.profile)
     const signInGmail=()=>{
       signInGoogle()
       .then(()=>{
-     history.replace(redirect_url)
+     history(redirect_url,{replace:true})
                 })
     }
     return (

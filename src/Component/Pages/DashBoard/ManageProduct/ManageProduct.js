@@ -1,16 +1,16 @@
 import React, { useEffect, useState,Fragment, useRef } from 'react';
-import {useHistory} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationIcon } from '@heroicons/react/outline'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const ManageProduct = () => {
     const [open, setOpen] = useState(false)
-    const history=useHistory()
+    const history=useNavigate()
   const cancelButtonRef = useRef(null)
     const [products,setProducts]=useState([])
     useEffect(()=>{
-        fetch("https://speed-trump-bd.herokuapp.com/cars")
+        fetch("https://speed-trump-server.onrender.com/cars")
         .then(res=>res.json())
         .then(data=>{
           
@@ -20,7 +20,7 @@ const ManageProduct = () => {
     },[products])
   
     const clickDelete=id=>{
-        fetch(`https://speed-trump-bd.herokuapp.com/cars/${id}`,{
+        fetch(`https://speed-trump-server.onrender.com/cars/${id}`,{
             method:"DELETE",
         })
        .then(response=>response.json())
@@ -35,7 +35,8 @@ const ManageProduct = () => {
     }
 
 const clickApproved=(id)=>{
-            history.push(`/manage_product/${id}`)
+            history(`/manage_product/${id}`,{ replace:true })
+            toast("Product Successfully Updated!")
 }
     return (
       <div className="lg:p-10 p-4">

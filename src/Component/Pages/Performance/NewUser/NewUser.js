@@ -11,7 +11,7 @@ const NewUser = () => {
           <div>  <p className="">Admin</p>
             <small className="text-red-500 font-medium block pb-9 ">Ali Hossain</small></div>
 
- <Link className="bg-indigo-900 my-10  text-white rounded-2xl py-2 px-4" to="/my_profile"><button>Go to Your Profile</button></Link>
+ <Link className="bg-indigo-900 my-10  text-white rounded-2xl py-2 px-4" to="/dashboard/profile"><button>Go to Your Profile</button></Link>
         </div>
     );
 };

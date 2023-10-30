@@ -2,33 +2,36 @@ import React, { useEffect, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // swiper bundle styles
-import 'swiper/swiper-bundle.min.css'
+import 'swiper/css/bundle'
 // swiper core styles
-import 'swiper/swiper.min.css'
+import 'swiper/css'
 // modules styles
-import 'swiper/components/navigation/navigation.min.css'
-import 'swiper/components/pagination/pagination.min.css'
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import "../../../../styles.css";
 import './Banner.css'
 // import Swiper core and required modules
-import SwiperCore, {
-    Autoplay,Pagination
-} from 'swiper';
+// import SwiperCore, {
+//     Autoplay,Pagination
+// } from 'swiper';
 import { Link } from "react-router-dom";
 // install Swiper modules
-SwiperCore.use([Autoplay,Pagination]);
+// SwiperCore.use([Autoplay,Pagination]);
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
 const Banner = () => {
     const [banners,setBanners]=useState([])
     useEffect(()=>{
-        fetch('https://speed-trump-bd.herokuapp.com/banner')
+        fetch('https://speed-trump-server.onrender.com/banner')
         .then(res=>res.json())
         .then(data=>setBanners(data))
     },[])
     
     return (
         <div>
-              <Swiper pagination={{
+              <Swiper 
+                    modules={[Navigation, Pagination, Autoplay]}
+                    pagination={{
   "dynamicBullets": true
 }}  autoplay={{
     "delay": 2500,

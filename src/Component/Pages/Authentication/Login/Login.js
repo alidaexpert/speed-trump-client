@@ -1,59 +1,58 @@
-import React, { useState } from 'react';
-import { LockClosedIcon } from '@heroicons/react/solid'
-import { Link,useHistory,useLocation } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-import logo from "../../../../images/logo/f.svg"
-import useAuth from '../../../hooks/useAuth/useAuth';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import { LockClosedIcon } from "@heroicons/react/solid";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import logo from "../../../../images/logo/f.svg";
+import useAuth from "../../../hooks/useAuth/useAuth";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-  const {
-    error,
-    signInGoogle,
-    signIn,
-    resetPassword}=useAuth()
-    const [loginData,setLoginData]=useState({})
-  const location=useLocation()
-  const history=useHistory()
-  const redirect_url=location.state?.from || "/dashboard"
-  const handleOnChange=e=>{
-    const field=e.target.name
-    const value=e.target.value
-    const newLoginData={...loginData}
-    newLoginData[field]=value
-    setLoginData(newLoginData)
-  }
-  const signInWithEmail=e=>{
-    signIn(loginData.email,loginData.password)
-    .then(()=>{
-   history.replace(redirect_url)
-              })
-e.preventDefault()
-  }
-  const signInGmail=()=>{
-    signInGoogle()
-    .then(()=>{
-   history.replace(redirect_url)
-              })
-  }
+  const { error, signInGoogle, signIn, resetPassword } = useAuth();
+  const [loginData, setLoginData] = useState({});
+  const location = useLocation();
+  const history = useNavigate();
+  const redirect_url = location.state?.from || "/dashboard";
+  const handleOnChange = (e) => {
+    const field = e.target.name;
+    const value = e.target.value;
+    const newLoginData = { ...loginData };
+    newLoginData[field] = value;
+    setLoginData(newLoginData);
+  };
+  const signInWithEmail = (e) => {
+    signIn(loginData.email, loginData.password).then(() => {
+      history(redirect_url, { replace: true });
+    });
+    e.preventDefault();
+  };
+  const signInGmail = () => {
+    signInGoogle().then(() => {
+      history(redirect_url, { replace: true });
+    });
+  };
   //  const googleFont=<FontAwesomeIcon icon={faGoogle}></FontAwesomeIcon>
-    return (
-        <div>
+  return (
+    <div>
       <div className="min-h-full bg-about  flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
-          <img src={logo} alt="" className="w-auto mx-auto h-12" />
+            <img src={logo} alt="" className="w-auto mx-auto h-12" />
 
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-100">Sign in to your account</h2>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-100">
+              Sign in to your account
+            </h2>
             <p className="mt-2 text-center text-sm text-gray-300">
-              Or{' '}
-              <Link to="/register" className="font-medium text-pink-600 hover:text-yellow-400">
-               Create your account
+              Or{" "}
+              <Link
+                to="/register"
+                className="font-medium text-pink-600 hover:text-yellow-400"
+              >
+                Create your account
               </Link>
             </p>
           </div>
-          <form  className="mt-8 space-y-6" onSubmit={signInWithEmail}>
+          <form className="mt-8 space-y-6" onSubmit={signInWithEmail}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
@@ -61,7 +60,7 @@ e.preventDefault()
                   Email address
                 </label>
                 <input
-                onBlur={handleOnChange}
+                  onBlur={handleOnChange}
                   id="email-address"
                   name="email"
                   type="email"
@@ -76,7 +75,7 @@ e.preventDefault()
                   Password
                 </label>
                 <input
-                onBlur={handleOnChange}
+                  onBlur={handleOnChange}
                   id="password"
                   name="password"
                   type="password"
@@ -86,9 +85,11 @@ e.preventDefault()
                   placeholder="Password"
                 />
               </div>
-              {
-                error&&<span className="text-white rounded-lg block text-sm bg-red-400 p-3 my-4">{error.slice(9,100)}</span>
-              }
+              {error && (
+                <span className="text-white rounded-lg block text-sm bg-red-400 p-3 my-4">
+                  {error.slice(9, 100)}
+                </span>
+              )}
             </div>
 
             <div className="flex items-center justify-between">
@@ -99,13 +100,19 @@ e.preventDefault()
                   type="checkbox"
                   className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-100">
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2 block text-sm text-gray-100"
+                >
                   Remember me
                 </label>
               </div>
 
               <div className="text-sm">
-                <button onClick={resetPassword} className="font-medium text-red-600 hover:text-red-400">
+                <button
+                  onClick={resetPassword}
+                  className="font-medium text-red-600 hover:text-red-400"
+                >
                   Forgot your password?
                 </button>
               </div>
@@ -117,28 +124,32 @@ e.preventDefault()
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
               >
                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                  <LockClosedIcon className="h-5 w-5 text-pink-200 group-hover:text-blue-700" aria-hidden="true" />
+                  <LockClosedIcon
+                    className="h-5 w-5 text-pink-200 group-hover:text-blue-700"
+                    aria-hidden="true"
+                  />
                 </span>
                 Sign in
               </button>
-             
-
-              
             </div>
           </form>
           <button
-                onClick={signInGmail}
-                className="group relative mt-3 w-full flex justify-center py-2 px-4 border border-transparent text-sm  rounded-md text-pink-600  font-bold bg-white border-pink-700 hover:bg-gray-100 hover:border-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
-              >
-                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                  <FontAwesomeIcon icon={faGoogle} className="h-5 w-5 text-pink-500 font-bold group-hover:text-pink-700" aria-hidden="true" />
-                </span>
-                Google Sign in
-              </button>
+            onClick={signInGmail}
+            className="group relative mt-3 w-full flex justify-center py-2 px-4 border border-transparent text-sm  rounded-md text-pink-600  font-bold bg-white border-pink-700 hover:bg-gray-100 hover:border-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
+          >
+            <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+              <FontAwesomeIcon
+                icon={faGoogle}
+                className="h-5 w-5 text-pink-500 font-bold group-hover:text-pink-700"
+                aria-hidden="true"
+              />
+            </span>
+            Google Sign in
+          </button>
         </div>
       </div>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default Login;

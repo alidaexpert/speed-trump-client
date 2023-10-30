@@ -2,8 +2,8 @@ import { faClock } from '@fortawesome/free-regular-svg-icons';
 import {  faCar, faCheckCircle, faGasPump, faTachometerAlt,  } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState, Fragment } from 'react';
-import { useHistory, useParams } from 'react-router';
-import {Rating, RatingView } from 'react-simple-star-rating'
+import { useNavigate, useParams } from 'react-router';
+import {Rating } from 'react-simple-star-rating'
 import useAuth from '../../hooks/useAuth/useAuth';
 import './SingleCarExplore.css'
 import { Dialog, Transition } from '@headlessui/react'
@@ -12,22 +12,26 @@ const SingleCarExplore = () => {
 
   const cancelButtonRef = useRef(null)
     const {id}=useParams()
-    const {user}=useAuth()
+    const {user,admin}=useAuth()
     const [car,setCar]=useState({})
     const {name,description,price,features,equipment,pic,brand,rating,status,madeyear,mileage,fuel,engine,horsepower, peopleRating,economy,transmission,color,door}=car
     // const [booking,setBooking]=useState({})
-    const history=useHistory()
+    const history=useNavigate()
     const phoneRef=useRef()
     const userNameRef=useRef()
     const dateRef=useRef()
     const paymentViaRef=useRef()
     const paymentNumRef=useRef()
     useEffect(()=>{
-        const url=`https://speed-trump-bd.herokuapp.com/cars/${id}`
+        const url=`https://speed-trump-server.onrender.com/cars/${id}`
 fetch(url)
 .then(res=>res.json())
 .then(data=>setCar(data))
     },[id])
+
+    const handledEdit=()=>{
+      history(`/manage_product/${id}`)
+    }
 
     const bookPackage=(e)=>{
 const userName=user.displayName===null ? userNameRef.current.value : user.displayName
@@ -40,7 +44,7 @@ const paymentNum=paymentNumRef.current.value
         const book={
 userName,email,phone,date,carName,pic,paymentVia,paymentNum,status:"Pending"
         }
-        fetch(`https://speed-trump-bd.herokuapp.com/purchase`,{
+        fetch(`https://speed-trump-server.onrender.com/purchase`,{
             method:"POST",
             headers:{
                 "content-type":"application/json"
@@ -50,7 +54,7 @@ userName,email,phone,date,carName,pic,paymentVia,paymentNum,status:"Pending"
         .then(res=>res.json())
         .then(data=>{
             if(data.acknowledged===true){
-                history.push("/purchase_done")
+                history("/purchase_done", {replace:true})
             }
         })
         phoneRef.current.value=""
@@ -70,17 +74,23 @@ e.preventDefault()
         <div className="lg:flex  gap-4 lg:p-10 ">
             {/* tour package section  */}
           <div className="lg:w-3/4 bg-gray-50 p-4 rounded-lg">
-          <div className="w-full">
+          { user.email && admin && <button onClick={handledEdit} className="block w-full border border-2 border-green-900 text-3xl text-white bg-green-700 px-6 py-1 rounded-md font-bold">Edit</button>}
+          <div className="w-full mt-4">
            <img src={pic} alt="" className="w-full rounded-md " />
            </div>
+         
+          
             <div className="lg:flex justify-between p-4">
+              
                 <div className="text-left">
                 <h2 className="text-3xl font-bold">{name}</h2>
                 <h4 className="text-gray-500"><span className="text-red-500">{clockFont}</span> {madeyear}</h4>
                 </div>
                 <div className="lg:text-right text-left">
                     <p className="text-sm font-medium text-blue-900">{rating}</p>
-                <RatingView size={16}  ratingValue={rating}  />
+                
+                < Rating SVGclassName={'diplay: inline-block'}  readonly size={16}  
+  initialValue={rating} /* Rating Props */ />
                 <p className="text-sm font-medium text-blue-900">{peopleRating} Review</p>
                 </div>
             </div>
@@ -280,7 +290,9 @@ Master/Visa Card
           <input type="text" className="p-4 w-full border-2 border-gray-200  rounded-md block" name="" id="" placeholder="Tour Type" />
           <textarea name="" className="p-4 w-full border-2 border-gray-200 rounded-md block" id="" cols="30" placeholder="Your Message" rows="10"></textarea>
           <p> Rate our website <br />
-          <Rating size={18} RatingView={4}/>
+         
+          < Rating SVGclassName={'diplay: inline-block'}  size={20}  
+  initialValue={0} /* Rating Props */ />
           <br />
           </p>
         <div className="text-center">

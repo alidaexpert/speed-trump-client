@@ -5,7 +5,7 @@ const useOrder = () => {
     
 
     useEffect(()=>{
-        fetch("https://tour-express.herokuapp.com/booking")
+        fetch("https://speed-trump-server.onrender.com/booking")
         .then(res=>res.json())
         .then(data=>{
             setOrders(data)
