@@ -4,13 +4,14 @@ import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationIcon } from '@heroicons/react/outline'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { apiEndpoint } from '../../../hooks/apiEndpoint/apiEndpoint';
 const ManageProduct = () => {
     const [open, setOpen] = useState(false)
     const history=useNavigate()
   const cancelButtonRef = useRef(null)
     const [products,setProducts]=useState([])
     useEffect(()=>{
-        fetch("https://speed-trump-server.onrender.com/cars")
+        fetch(`${apiEndpoint}/cars`)
         .then(res=>res.json())
         .then(data=>{
           
@@ -20,7 +21,7 @@ const ManageProduct = () => {
     },[products])
   
     const clickDelete=id=>{
-        fetch(`https://speed-trump-server.onrender.com/cars/${id}`,{
+        fetch(`${apiEndpoint}/cars/${id}`,{
             method:"DELETE",
         })
        .then(response=>response.json())

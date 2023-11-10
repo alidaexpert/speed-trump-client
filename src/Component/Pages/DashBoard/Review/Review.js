@@ -4,6 +4,7 @@ import useAuth from "../../../hooks/useAuth/useAuth"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {  Rating } from 'react-simple-star-rating'
+import { apiEndpoint } from '../../../hooks/apiEndpoint/apiEndpoint';
 
 const Review = () => {
     const { register, handleSubmit,reset } = useForm();
@@ -17,7 +18,7 @@ const Review = () => {
         reset()
         data.rating=rating
         data.pic=user.photoURL
-          fetch("https://speed-trump-server.onrender.com/reviews",{
+          fetch(`${apiEndpoint}/reviews`,{
 method:"POST",
 headers:{
     "content-type":"application/json"

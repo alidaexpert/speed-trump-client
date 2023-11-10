@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth/useAuth";
 import "react-toastify/dist/ReactToastify.css";
+import { apiEndpoint } from "../../../hooks/apiEndpoint/apiEndpoint";
 const DashBoard = () => {
   const { admin, logOut } = useAuth();
   const [orders, setOrders] = useState([]);
 
   // const [status,setStatus]=useState('Pending')
   useEffect(() => {
-    fetch("https://speed-trump-server.onrender.com/purchase")
+    fetch(`${apiEndpoint}/purchase`)
       .then((res) => res.json())
       .then((data) => {
         setOrders(data);

@@ -3,6 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationIcon } from '@heroicons/react/outline'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { apiEndpoint } from '../../../hooks/apiEndpoint/apiEndpoint';
 const ManageAllOrders = () => {
     const [open, setOpen] = useState(false)
 
@@ -10,7 +11,7 @@ const ManageAllOrders = () => {
     const [orders,setOrders]=useState([])
     // const [status,setStatus]=useState('Pending')
     useEffect(()=>{
-        fetch("https://speed-trump-server.onrender.com/purchase")
+        fetch(`${apiEndpoint}/purchase`)
         .then(res=>res.json())
         .then(data=>{
           
@@ -20,7 +21,7 @@ const ManageAllOrders = () => {
     },[orders])
   
     const clickDelete=id=>{
-        fetch(`https://speed-trump-server.onrender.com/purchase/${id}`,{
+        fetch(`${apiEndpoint}/purchase/${id}`,{
             method:"DELETE",
         })
        .then(response=>response.json())
@@ -36,7 +37,7 @@ const ManageAllOrders = () => {
 
 const clickApproved=(id)=>{
     const updateStatus={status:"Approved"}
-    fetch(`https://speed-trump-server.onrender.com/purchase/${id}`,{
+    fetch(`${apiEndpoint}/purchase/${id}`,{
         method:"PUT",
         headers:{
             "content-type":"application/json"

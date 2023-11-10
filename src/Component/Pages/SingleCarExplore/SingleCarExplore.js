@@ -7,6 +7,7 @@ import {Rating } from 'react-simple-star-rating'
 import useAuth from '../../hooks/useAuth/useAuth';
 import './SingleCarExplore.css'
 import { Dialog, Transition } from '@headlessui/react'
+import { apiEndpoint } from '../../hooks/apiEndpoint/apiEndpoint';
 const SingleCarExplore = () => {
     const [open, setOpen] = useState(false)
 
@@ -23,7 +24,7 @@ const SingleCarExplore = () => {
     const paymentViaRef=useRef()
     const paymentNumRef=useRef()
     useEffect(()=>{
-        const url=`https://speed-trump-server.onrender.com/cars/${id}`
+        const url=`${apiEndpoint}/cars/${id}`
 fetch(url)
 .then(res=>res.json())
 .then(data=>setCar(data))
@@ -44,7 +45,7 @@ const paymentNum=paymentNumRef.current.value
         const book={
 userName,email,phone,date,carName,pic,paymentVia,paymentNum,status:"Pending"
         }
-        fetch(`https://speed-trump-server.onrender.com/purchase`,{
+        fetch(`${apiEndpoint}/purchase`,{
             method:"POST",
             headers:{
                 "content-type":"application/json"

@@ -2,13 +2,14 @@ import React,{useEffect, useState} from 'react';
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { apiEndpoint } from '../../../hooks/apiEndpoint/apiEndpoint';
 
 const AddAnProduct = () => {
     const { register, handleSubmit,reset } = useForm();
     const [car,setCar]=useState({})
     const {equipment,features}=car
     useEffect(()=>{
-        const url=`https://speed-trump-server.onrender.com/cars/618eb0af1eae242def7f863c`
+        const url=`${apiEndpoint}/cars/618eb0af1eae242def7f863c`
 fetch(url)
 .then(res=>res.json())
 .then(data=>setCar(data))
@@ -20,7 +21,7 @@ fetch(url)
          data.features=features
          const addCar=data
 
-         fetch("https://speed-trump-server.onrender.com/cars",{
+         fetch(`${apiEndpoint}/cars`,{
 method:"POST",
 headers:{
     "content-type":"application/json"

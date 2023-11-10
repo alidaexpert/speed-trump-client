@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { apiEndpoint } from "../../../hooks/apiEndpoint/apiEndpoint";
 
 const MakeAdmin = () => {
   const [userData, setUserData] = useState([]);
@@ -19,13 +20,13 @@ const MakeAdmin = () => {
   };
   // console.table(value,navigate,pathname);
   useEffect(() => {
-    fetch("http://localhost:5000/user_data")
+    fetch(`${apiEndpoint}/user_data`)
       .then((res) => res.json())
       .then((data) => setUserData(data));
   }, []);
   const handleEdit = async (id) => {
     const role = { role: value };
-    await fetch(`http://localhost:5000/user_admin/${id}`, {
+    await fetch(`${apiEndpoint}/user_admin/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

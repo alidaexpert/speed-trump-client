@@ -20,13 +20,14 @@ import { faQuoteLeft, faQuoteRight } from "@fortawesome/free-solid-svg-icons";
 // install Swiper modules
 // SwiperCore.use([Autoplay,Parallax]);
 import { Navigation, Pagination, Autoplay,Parallax } from 'swiper/modules';
+import { apiEndpoint } from "../../../hooks/apiEndpoint/apiEndpoint";
 
 const DisplayReview = () => {
     const quoteRight=<FontAwesomeIcon icon={faQuoteRight}></FontAwesomeIcon>
     const quoteLeft=<FontAwesomeIcon icon={faQuoteLeft}></FontAwesomeIcon>
    const [displayReviews,setDisplayReviews]=useState([])
    useEffect(()=>{
-       fetch('https://speed-trump-server.onrender.com/reviews')
+       fetch(`${apiEndpoint}/reviews`)
        .then(res=>res.json())
        .then(data=>setDisplayReviews(data))
    },[])

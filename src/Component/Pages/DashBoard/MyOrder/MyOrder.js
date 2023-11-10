@@ -4,6 +4,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationIcon } from '@heroicons/react/outline'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { apiEndpoint } from '../../../hooks/apiEndpoint/apiEndpoint';
 
 const MyOrder = () => {
     const {user,logOut}=useAuth()
@@ -12,7 +13,7 @@ const MyOrder = () => {
 
     const [orders,setOrders]=useState([])
     useEffect(()=>{
-        fetch(`https://speed-trump-server.onrender.com/myorder/${user.email}`,{
+        fetch(`${apiEndpoint}/myorder/${user.email}`,{
             headers:{
                 "authorization":`Bearer ${localStorage.getItem("idToken")}`
             }
@@ -29,7 +30,7 @@ const MyOrder = () => {
     },[user.email,logOut])
 
     const clickDelete=id=>{
-        fetch(`https://speed-trump-server.onrender.com/purchase/${id}`,{
+        fetch(`${apiEndpoint}/purchase/${id}`,{
             method:"DELETE",
         })
        .then(response=>response.json())

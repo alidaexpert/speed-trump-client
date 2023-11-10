@@ -1,4 +1,5 @@
 import {useState,useEffect} from 'react';
+import { apiEndpoint } from '../apiEndpoint/apiEndpoint';
 
 const useCars = () => {
     const [cars,setCars]=useState([])
@@ -6,7 +7,7 @@ const useCars = () => {
     const [pagination,setPagination]=useState(0);
     const size=6
 useEffect(()=>{
-    fetch(`https://speed-trump-server.onrender.com/cars?page=${page}&size=${size}`)
+    fetch(`${apiEndpoint}/cars?page=${page}&size=${size}`)
     .then(res=>res.json())
     .then(data=>{
         setCars(data.products)

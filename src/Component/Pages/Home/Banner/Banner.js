@@ -18,11 +18,12 @@ import { Link } from "react-router-dom";
 // install Swiper modules
 // SwiperCore.use([Autoplay,Pagination]);
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { apiEndpoint } from "../../../hooks/apiEndpoint/apiEndpoint";
 
 const Banner = () => {
     const [banners,setBanners]=useState([])
     useEffect(()=>{
-        fetch('https://speed-trump-server.onrender.com/banner')
+        fetch(`${apiEndpoint}/banner`)
         .then(res=>res.json())
         .then(data=>setBanners(data))
     },[])

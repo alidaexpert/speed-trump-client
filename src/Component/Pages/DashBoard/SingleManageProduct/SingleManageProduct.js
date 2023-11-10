@@ -10,6 +10,7 @@ import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { apiEndpoint } from "../../../hooks/apiEndpoint/apiEndpoint";
 // import { set } from "core-js/core/dict";
 
 const SingleManageProduct = () => {
@@ -89,7 +90,7 @@ const SingleManageProduct = () => {
 
   useEffect(() => {
     const getCars = async () => {
-      const url = `http://localhost:5000/cars/${id}`;
+      const url = `${apiEndpoint}/cars/${id}`;
       await fetch(url)
         .then((res) => res.json())
         .then((data) => setCar(data));
@@ -98,7 +99,7 @@ const SingleManageProduct = () => {
   }, [id]);
 
   const updateProduct = async () => {
-    await fetch(`http://localhost:5000/cars/update/${id}`, {
+    await fetch(`${apiEndpoint}/cars/update/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { apiEndpoint } from '../apiEndpoint/apiEndpoint';
 
 const useOrder = () => {
     const [orders,setOrders]=useState([])
     
 
     useEffect(()=>{
-        fetch("https://speed-trump-server.onrender.com/booking")
+        fetch(`${apiEndpoint}/booking`)
         .then(res=>res.json())
         .then(data=>{
             setOrders(data)

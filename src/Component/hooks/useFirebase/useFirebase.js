@@ -12,6 +12,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import iniatializeAppAuth from "../../Firebase/firebase.init";
+import { apiEndpoint } from "../apiEndpoint/apiEndpoint";
 iniatializeAppAuth();
 const auth = getAuth();
 const googleProvider = new GoogleAuthProvider();
@@ -54,7 +55,7 @@ const useFirebase = () => {
   }, [user]);
 
   useEffect(() => {
-    fetch(`https://speed-trump-server.onrender.com/user/${user.email}`)
+    fetch(`${apiEndpoint}/user/${user.email}`)
       .then((res) => res.json())
       .then((data) => setAdmin(data.Admin));
   })
@@ -71,7 +72,7 @@ const useFirebase = () => {
   };
   const saveUserToDB = (email, name, pic, method) => {
     const user = { email, name, pic };
-    fetch("https://speed-trump-server.onrender.com/user_data", {
+    fetch(`${apiEndpoint}/user_data`, {
       method: method,
       headers: {
         "content-type": "application/json",
