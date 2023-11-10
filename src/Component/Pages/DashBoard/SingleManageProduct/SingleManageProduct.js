@@ -42,22 +42,22 @@ const SingleManageProduct = () => {
   const [equipments, setEquipment] = useState([]);
   const navigate= useNavigate()
 
-  const featureOnChange = (e) => {
-    const field = e.target.name;
-    const value = e.target.value;
-    let newField = { ...feature };
-    newField[field] = value;
-    setFeature(newField);
-    console.log(newField);
-  };
-  const equipmentOnChange = (e) => {
-    const field = e.target.name;
-    const value = e.target.value;
-    let newField = { ...equipments };
-    newField[field] = value;
-    setEquipment(newField);
-    console.log(newField);
-  };
+  // const featureOnChange = (e) => {
+  //   const field = e.target.name;
+  //   const value = e.target.value;
+  //   let newField = { ...feature };
+  //   newField[field] = value;
+  //   setFeature(newField);
+  //   console.log(newField);
+  // };
+  // const equipmentOnChange = (e) => {
+  //   const field = e.target.name;
+  //   const value = e.target.value;
+  //   let newField = { ...equipments };
+  //   newField[field] = value;
+  //   setEquipment(newField);
+  //   console.log(newField);
+  // };
 
   const handleOnBlur = (e) => {
     const field = e.target.name;
@@ -66,23 +66,23 @@ const SingleManageProduct = () => {
     console.log(newData);
     newData[field] = value;
 
-    const newField = [];
-    for (const i in feature) {
-      if (i.indexOf("list") > -1) {
-        newField.push(feature[i]);
-      }
-    }
+    // const newField = [];
+    // for (const i in feature) {
+    //   if (i.indexOf("list") > -1) {
+    //     newField.push(feature[i]);
+    //   }
+    // }
 
-    const newEquipment = [];
-    for (const i in equipments) {
-      if (i.indexOf("equipmentList") > -1) {
-        newEquipment.push(equipments[i]);
-      }
-    }
+    // const newEquipment = [];
+    // for (const i in equipments) {
+    //   if (i.indexOf("equipmentList") > -1) {
+    //     newEquipment.push(equipments[i]);
+    //   }
+    // }
 
     
-    newData["features"] = newField;
-    newData["equipment"] = newEquipment;
+    // newData["features"] = newField;
+    // newData["equipment"] = newEquipment;
     console.log(newData);
     setupdate(newData);
   };
@@ -231,7 +231,14 @@ const SingleManageProduct = () => {
             <div className="space-y-4 text-justify">
               <h2 className="text-left text-3xl font-bold">Features</h2>
               <div className="lg:flex gap-4 justify-between text-lg">
-                <ul className="space-y-3 text-gray-700">
+              <input
+                    defaultValue={features}
+                    onChange={handleOnBlur}
+                    name='features'
+                    className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
+                  />
+                {/* <ul className="space-y-3 text-gray-700">
+               
                   {features
                     ?.map((list,index) => (
                       <li key={list}>
@@ -261,7 +268,7 @@ const SingleManageProduct = () => {
                       </li>
                     ))
                     .slice(6, 12)}
-                </ul>
+                </ul> */}
               </div>
             </div>
           </div>
@@ -403,8 +410,8 @@ const SingleManageProduct = () => {
                   <ul className=" space-y-2">
                   <input
                     defaultValue={equipment}
-                    onChange={equipmentOnChange}
-                    name='equipmentList'
+                    onChange={handleOnBlur}
+                    name='equipment'
                     className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
                   />
                     {/* {equipment?.map((list,index) => (
