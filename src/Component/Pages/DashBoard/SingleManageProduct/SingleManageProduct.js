@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   faCar,
-  faCheckCircle,
+  // faCheckCircle,
   faGasPump,
   faTachometerAlt,
 } from "@fortawesome/free-solid-svg-icons";
@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { apiEndpoint } from "../../../hooks/apiEndpoint/apiEndpoint";
-// import { set } from "core-js/core/dict";
 
 const SingleManageProduct = () => {
   const { id } = useParams();
@@ -39,51 +38,23 @@ const SingleManageProduct = () => {
   } = car;
 
   const [update, setupdate] = useState(car);
-  const [feature, setFeature] = useState([]);
-  const [equipments, setEquipment] = useState([]);
-  const navigate= useNavigate()
-
-  // const featureOnChange = (e) => {
-  //   const field = e.target.name;
-  //   const value = e.target.value;
-  //   let newField = { ...feature };
-  //   newField[field] = value;
-  //   setFeature(newField);
-  //   console.log(newField);
-  // };
-  // const equipmentOnChange = (e) => {
-  //   const field = e.target.name;
-  //   const value = e.target.value;
-  //   let newField = { ...equipments };
-  //   newField[field] = value;
-  //   setEquipment(newField);
-  //   console.log(newField);
-  // };
+  const navigate = useNavigate();
 
   const handleOnBlur = (e) => {
     const field = e.target.name;
     const value = e.target.value;
     let newData = { ...update };
-    console.log(newData);
     newData[field] = value;
 
-    // const newField = [];
-    // for (const i in feature) {
-    //   if (i.indexOf("list") > -1) {
-    //     newField.push(feature[i]);
-    //   }
-    // }
+    if (typeof newData["features"] == "string") {
+      newData["features"] = newData.features.split(/\r?\n/);
+      setupdate(newData);
+    }
+    if (typeof newData["equipment"] == "string") {
+      newData["equipment"] = newData.equipment.split(/\r?\n/);
+      setupdate(newData);
+    }
 
-    // const newEquipment = [];
-    // for (const i in equipments) {
-    //   if (i.indexOf("equipmentList") > -1) {
-    //     newEquipment.push(equipments[i]);
-    //   }
-    // }
-
-    
-    // newData["features"] = newField;
-    // newData["equipment"] = newEquipment;
     console.log(newData);
     setupdate(newData);
   };
@@ -111,14 +82,14 @@ const SingleManageProduct = () => {
         console.log(data);
         if (data.modifiedCount > 0) {
           toast("Product Successfully Updated!");
-          navigate(`/car/${id}`)
+          navigate(`/car/${id}`);
         }
       });
   };
   const carFont = <FontAwesomeIcon icon={faCar}></FontAwesomeIcon>;
   const speedFont = <FontAwesomeIcon icon={faTachometerAlt}></FontAwesomeIcon>;
   const engineFont = <FontAwesomeIcon icon={faGasPump}></FontAwesomeIcon>;
-  const checkFont = <FontAwesomeIcon icon={faCheckCircle}></FontAwesomeIcon>;
+  // const checkFont = <FontAwesomeIcon icon={faCheckCircle}></FontAwesomeIcon>;
 
   return (
     <div className="bg-white">
@@ -177,7 +148,7 @@ const SingleManageProduct = () => {
             <div className="flex lg:justify-center lg:border-r-2 border-gray-400 items-center gap-4">
               <span className="text-4xl text-red-500"> {speedFont}</span>
               <div>
-                <small className="text-blue-900 flex gap-2 font-bold text-md items-center font-medium">
+                <small className="text-blue-900 flex gap-2  text-md items-center font-medium">
                   <input
                     defaultValue={economy}
                     onChange={handleOnBlur}
@@ -191,7 +162,7 @@ const SingleManageProduct = () => {
             <div className="flex lg:justify-center lg:border-r-2 border-gray-400 items-center gap-4">
               <span className="text-4xl text-red-500"> {engineFont}</span>
               <div>
-                <small className="text-blue-900 flex gap-2 font-bold text-md items-center font-medium">
+                <small className="text-blue-900 flex gap-2  text-md items-center font-medium">
                   <input
                     defaultValue={fuel}
                     onChange={handleOnBlur}
@@ -204,7 +175,7 @@ const SingleManageProduct = () => {
             <div className="flex lg:justify-center items-center gap-4">
               <span className="text-4xl text-red-500"> {carFont}</span>
               <div>
-                <small className="text-blue-900 flex gap-2 font-bold text-md items-center font-medium">
+                <small className="text-blue-900 flex gap-2  text-md items-center font-medium">
                   <input
                     defaultValue={mileage}
                     onChange={handleOnBlur}
@@ -232,44 +203,14 @@ const SingleManageProduct = () => {
             <div className="space-y-4 text-justify">
               <h2 className="text-left text-3xl font-bold">Features</h2>
               <div className="lg:flex gap-4 justify-between text-lg">
-              <input
-                    defaultValue={features}
-                    onChange={handleOnBlur}
-                    name='features'
-                    className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  />
-                {/* <ul className="space-y-3 text-gray-700">
-               
-                  {features
-                    ?.map((list,index) => (
-                      <li key={list}>
-                        <span className="text-green-600">{checkFont}</span>{" "}
-                        <input
-                    defaultValue={list}
-                    onChange={featureOnChange}
-                    name={`list${index}`}
-                    className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  />
-                        
-                      </li>
-                    ))
-                    .slice(0, 6)}
-                </ul>
-                <ul className="space-y-3 text-gray-700">
-                  {features
-                    ?.map((list,index) => (
-                      <li key={list}>
-                        <span className="text-green-600">{checkFont}</span>{" "}
-                        <input
-                    defaultValue={list}
-                    onChange={featureOnChange}
-                    name={`list${index}`}
-                    className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  />
-                      </li>
-                    ))
-                    .slice(6, 12)}
-                </ul> */}
+                <textarea
+                  rows="5"
+                  cols="24"
+                  defaultValue={features}
+                  onChange={handleOnBlur}
+                  name="features"
+                  className="border-2 bg-blue-200 border-gray-600 p-1 font-bold"
+                ></textarea>
               </div>
             </div>
           </div>
@@ -283,13 +224,12 @@ const SingleManageProduct = () => {
             <p className="text-2xl text-white font-bold p-5 flex items-center bg-red-600">
               $
               <input
-                    defaultValue={price}
-                    onChange={handleOnBlur}
-                    name="price"
-                    className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  />
+                defaultValue={price}
+                onChange={handleOnBlur}
+                name="price"
+                className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
+              />
             </p>
-
           </div>
           <table className="w-full text-left rounded-xl border-2 uppercase font-bold ">
             <tbody>
@@ -297,111 +237,135 @@ const SingleManageProduct = () => {
                 <td className="border-2 font-medium text-indigo-900 p-4">
                   Brand
                 </td>
-                <td className="border-2 p-4"> <input
+                <td className="border-2 p-4">
+                  {" "}
+                  <input
                     defaultValue={brand}
                     onChange={handleOnBlur}
                     name="brand"
                     className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  /></td>
+                  />
+                </td>
               </tr>
               <tr className="border-2">
                 <td className="border-2 font-medium text-indigo-900 p-4">
                   Stock Status
                 </td>
-                <td className="border-2 p-4"> <input
+                <td className="border-2 p-4">
+                  {" "}
+                  <input
                     defaultValue={status}
                     onChange={handleOnBlur}
                     name="status"
                     className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  /></td>
+                  />
+                </td>
               </tr>
               <tr className="border-2">
                 <td className="border-2 font-medium text-indigo-900 p-4">
                   Build Year
                 </td>
-                <td className="border-2 p-4"><input
+                <td className="border-2 p-4">
+                  <input
                     defaultValue={madeyear}
                     onChange={handleOnBlur}
                     name="madeyear"
                     className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  /></td>
+                  />
+                </td>
               </tr>
               <tr className="border-2">
                 <td className="border-2 font-medium text-indigo-900 p-4">
                   Mileage
                 </td>
-                <td className="border-2 p-4"><input
+                <td className="border-2 p-4">
+                  <input
                     defaultValue={mileage}
                     onChange={handleOnBlur}
                     name="mileage"
                     className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  /></td>
+                  />
+                </td>
               </tr>
               <tr className="border-2">
                 <td className="border-2 font-medium text-indigo-900 p-4">
                   Fuel
                 </td>
-                <td className="border-2 p-4"><input
+                <td className="border-2 p-4">
+                  <input
                     defaultValue={fuel}
                     onChange={handleOnBlur}
                     name="fuel"
                     className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  /></td>
+                  />
+                </td>
               </tr>
               <tr className="border-2">
                 <td className="border-2 font-medium text-indigo-900 p-4">
                   Engine
                 </td>
-                <td className="border-2 p-4"><input
+                <td className="border-2 p-4">
+                  <input
                     defaultValue={engine}
                     onChange={handleOnBlur}
                     name="engine"
                     className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  /> cc</td>
+                  />{" "}
+                  cc
+                </td>
               </tr>
               <tr className="border-2">
                 <td className="border-2 font-medium text-indigo-900 p-4">
                   Transmission
                 </td>
-                <td className="border-2 p-4"><input
+                <td className="border-2 p-4">
+                  <input
                     defaultValue={transmission}
                     onChange={handleOnBlur}
                     name="transmission"
                     className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  /></td>
+                  />
+                </td>
               </tr>
               <tr className="border-2">
                 <td className="border-2 font-medium text-indigo-900 p-4">
                   Horsepower
                 </td>
-                <td className="border-2 p-4 flex gap-2 items-center"><input
+                <td className="border-2 p-4 flex gap-2 items-center">
+                  <input
                     defaultValue={horsepower}
                     onChange={handleOnBlur}
                     name="horsepower"
                     className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  /> hp</td>
+                  />{" "}
+                  hp
+                </td>
               </tr>
               <tr className="border-2">
                 <td className="border-2 font-medium text-indigo-900 p-4">
                   Color
                 </td>
-                <td className="border-2 p-4"><input
+                <td className="border-2 p-4">
+                  <input
                     defaultValue={color}
                     onChange={handleOnBlur}
                     name="color"
                     className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  /></td>
+                  />
+                </td>
               </tr>
               <tr className="border-2">
                 <td className="border-2 font-medium text-indigo-900 p-4">
                   Door
                 </td>
-                <td className="border-2 p-4"><input
+                <td className="border-2 p-4">
+                  <input
                     defaultValue={door}
                     onChange={handleOnBlur}
                     name="door"
                     className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  /></td>
+                  />
+                </td>
               </tr>
               <tr className="border-2">
                 <td className="border-2 font-medium text-indigo-900 p-4">
@@ -409,25 +373,14 @@ const SingleManageProduct = () => {
                 </td>
                 <td className=" border-2 p-4">
                   <ul className=" space-y-2">
-                  <input
-                    defaultValue={equipment}
-                    onChange={handleOnBlur}
-                    name='equipment'
-                    className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  />
-                    {/* {equipment?.map((list,index) => (
-                      <li key={list}>
-                        
-                        <span className="text-green-600">{checkFont} </span>
-                       
-                        <input
-                    defaultValue={list}
-                    onChange={equipmentOnChange}
-                    name={`equipmentList${index}`}
-                    className="border-2 bg-blue-200 border-gray-600 p-1  font-bold"
-                  />
-                      </li>
-                    ))} */}
+                    <textarea
+                      rows="5"
+                      cols="24"
+                      defaultValue={equipment}
+                      onChange={handleOnBlur}
+                      name="equipment"
+                      className="border-2 bg-blue-200 border-gray-600 p-1 font-bold"
+                    ></textarea>
                   </ul>
                 </td>
               </tr>
